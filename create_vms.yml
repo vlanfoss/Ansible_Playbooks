@@ -11,7 +11,7 @@
     vcenter_pass: 'Smartvm!23'
     datacenter: 'Kenley'
     esxi_host: '192.168.1.21'
-    notes: 'Created by Ansible'
+    notes: 'Created by Ansible and CloudForms'
     disk: '10' 
     datastore: 'datastore1' 
     network: 'VM Network' 
