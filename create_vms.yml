@@ -5,21 +5,10 @@
   user: remote
   sudo: false
 
-  vars_prompt:
-    - name: "vcenter_hostname"
-      prompt: "Enter vcenter hostname"
-      private: no
-      default: "192.168.1.26"
-    - name: "vcenter_user"
-      prompt: "Enter vcenter username"
-      private: no
-      default: "administrator@home.net"
-    - name: "vcenter_pass"
-      prompt: "Enter vcenter password"
-      default: "Smartvm!23"
-      private: no
-
   vars:
+    vcenter_hostname: '192.168.1.26'
+    vcenter_user: 'administrator@home.net'
+    vcenter_pass: 'Smartvm!23'
     datacenter: 'Kenley'
     esxi_host: '192.168.1.21'
     notes: 'Created by Ansible'
