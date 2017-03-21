@@ -12,6 +12,12 @@
     datacenter: 'Kenley'
     esxi_host: '192.168.1.21'
     notes: 'Created by Ansible'
+    disk: '10' 
+    datastore: 'datastore1' 
+    network: 'VM Network' 
+    memory: '256' 
+    cpucount: '1' 
+    osid: 'ubuntu64Guest'
 
   tasks:
     - vsphere_guest:
