@@ -20,7 +20,8 @@
     osid: 'ubuntu64Guest'
 
   tasks:
-    - vsphere_guest:
+    - name: Create Virtual Machines
+      vsphere_guest:
         validate_certs: no
         vcenter_hostname: "{{ vcenter_hostname }}"
         username: "{{ vcenter_user }}"
