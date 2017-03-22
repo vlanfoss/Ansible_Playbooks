@@ -1,0 +1,22 @@
+---
+- hosts: all
+  gather_facts: false
+  connection: local
+  user: remote
+  sudo: false
+
+  vars:
+    vcenter_hostname: '192.168.1.26'
+    vcenter_user: 'administrator@home.net'
+    vcenter_pass: 'Smartvm!23'
+    datacenter: 'Coulsdon'
+    esxi_host: '192.168.1.21'
+
+  tasks:
+  	- vmware_guest:
+      	hostname: 192.168.1.209
+      	username: administrator@vsphere.local
+      	password: vmware
+      	uuid: 421e4592-c069-924d-ce20-7e7533fab926
+      	name: new_name
+      	state: present
