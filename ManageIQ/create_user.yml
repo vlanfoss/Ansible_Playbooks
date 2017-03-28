@@ -12,6 +12,10 @@
     miq_url2: "https://{{ miq_server }}/api/users"
 
   tasks:
+    - debug: var=manageiq.api_url
+    - debug: var=manageiq.api_token
+    - debug: var=manageiq.service
+    - debug: var=manageiq.event_target
     - name: Call to ManageIQ to find href for EvmGroup-user
       uri:
         url: "{{ miq_url1 }}"
