@@ -4,8 +4,8 @@
   vars:
     create_user_name: 'fisherprice'
     create_user_password: 'secret'
-    groups_url: "https://{{ manageiq.api_url }}/api/groups?expand=resources&attributes=description,href,id&filter[]=description='EvmGroup-user'"
-    user_url: "https://{{ manageiq.api_url }}/api/users"
+    groups_url: "{{ manageiq.api_url }}/api/groups?expand=resources&attributes=description,href,id&filter[]=description='EvmGroup-user'"
+    user_url: "{{ manageiq.api_url }}/api/users"
 
   tasks:
     - debug: var=manageiq.api_url
@@ -26,7 +26,7 @@
 
     - set_fact: group_id="{{ token_output.json.resources[0].id }}"
 
-    - name: Call to ManageIQ to find href for EvmGroup-user
+    - name: Call to CloudForms to find href for EvmGroup-user
       uri:
         url: "{{ user_url }}"
         method: POST
