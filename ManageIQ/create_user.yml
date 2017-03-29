@@ -1,5 +1,5 @@
 # John Hardy
-# FisherPrice example - Create a user in CloudForms.
+# FisherPrice example - Create user "fisherprice" and memberof "EvmGroup-users" in CloudForms.
 ---
 - hosts: localhost
 

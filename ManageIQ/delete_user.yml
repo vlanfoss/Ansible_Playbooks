@@ -6,9 +6,7 @@
     miq_server: "192.168.1.90"
     create_user_name: 'fisherprice'
     create_user_password: 'secret'
-    miq_user: 'admin'
-    miq_pass: 'smartvm'
-    miq_url1: "https://{{ miq_server }}/api/users?expand=resources&attributes=name,href,id&filter[]=name='fisherprice'"
+    user_url: "{{ manageiq.api_url }}/api/users?expand=resources&attributes=name,href,id&filter[]=name='fisherprice'"
 
   tasks:
     - debug: var=manageiq.api_url
@@ -17,19 +15,19 @@
     - debug: var=manageiq.event_target
     - name: Call to ManageIQ to find href for user fisherprice
       uri:
-        url: "{{ miq_url1 }}"
+        url: "{{ user_url }}"
         method: GET
         validate_certs: no
-        user: '{{ miq_user }}'
-        password: '{{ miq_pass }}'
-        force_basic_auth: yes
+        headers:
+           X-Auth-Token: "{{ manageiq.api_token }}"
+           Content-Type: "application/json"
         body_format: json
         return_content: yes
       register: token_output
 
     - set_fact: user_href="{{ token_output.json.resources[0].href }}"
 
-    - name: Call to ManageIQ to find href for EvmGroup-user
+    - name: Call to ManageIQ to delete the user fisherprice by href
       uri:
         url: "{{ user_href }}"
         method: POST
