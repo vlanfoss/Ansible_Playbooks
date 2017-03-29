@@ -16,7 +16,7 @@
     - debug: var=manageiq.api_token
     - debug: var=manageiq.service
     - debug: var=manageiq.event_target
-    - name: Call to ManageIQ to find href for EvmGroup-user
+    - name: Call to CloudForms to find href for EvmGroup-user
       uri:
         url: "{{ miq_url1 }}"
         method: GET
