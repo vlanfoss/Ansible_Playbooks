@@ -1,3 +1,5 @@
+# John Hardy
+# FisherPrice example - Create a user in CloudForms.
 ---
 - hosts: localhost
 
@@ -8,10 +10,6 @@
     user_url: "{{ manageiq.api_url }}/api/users"
 
   tasks:
-    - debug: var=manageiq.api_url
-    - debug: var=manageiq.api_token
-    - debug: var=manageiq.service
-    - debug: var=manageiq.event_target
     - name: Call to CloudForms to find href for EvmGroup-user
       uri:
         url: "{{ groups_url }}"
