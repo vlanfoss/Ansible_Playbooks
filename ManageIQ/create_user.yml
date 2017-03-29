@@ -24,7 +24,7 @@
 
     - set_fact: group_id="{{ token_output.json.resources[0].id }}"
 
-    - name: Call to CloudForms to find href for EvmGroup-user
+    - name: Call to CloudForms to create the user "Fisherprice"
       uri:
         url: "{{ user_url }}"
         method: POST
