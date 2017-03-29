@@ -3,7 +3,7 @@
 - hosts: localhost
 
   vars:
-    miq_server: "192.168.1.90"
+    miq_server: "192.168.1.64"
     create_user_name: 'fisherprice'
     create_user_password: 'secret'
     miq_user: 'admin'
