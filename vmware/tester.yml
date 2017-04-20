@@ -22,8 +22,6 @@
       vsphere_guest:
         validate_certs: no
         vcenter_hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_user }}"
-        password: "{{ vcenter_pass }}"
         guest: "{{ inventory_hostname }}"
         state: present
         vm_extra_config:
