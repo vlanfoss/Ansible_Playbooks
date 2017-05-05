@@ -15,7 +15,7 @@
     network: 'VM Network' 
     memory: '256' 
     cpucount: '1' 
-    osid: 'ubuntu64Guest'
+    osid: 'rhel7_64Guest'
 
   tasks:
     - name: Create Virtual Machines
