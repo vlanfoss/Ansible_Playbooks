@@ -7,7 +7,7 @@
 
   vars:
     vcenter_hostname: '192.168.201.50'
-    datacenter: 'Coulsdon'
+    datacenter: 'London'
     esxi_host: '192.168.201.131'
     notes: 'Created by Ansible and CloudForms yay'
     disk: '10' 
