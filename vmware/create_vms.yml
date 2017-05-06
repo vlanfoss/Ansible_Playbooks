@@ -9,7 +9,7 @@
     vcenter_hostname: '192.168.201.50'
     datacenter: 'London'
     esxi_host: '192.168.201.131'
-    notes: 'Created by Ansible and CloudForms yay'
+    notes: 'Created by Ansible and CloudForms'
     disk: '10' 
     datastore: 'datastore1' 
     network: 'VM Network' 
@@ -22,8 +22,6 @@
       vsphere_guest:
         validate_certs: no
         vcenter_hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_user }}"
-        password: "{{ vcenter_pass }}"
         guest: "{{ inventory_hostname }}"
         state: present
         vm_extra_config:
