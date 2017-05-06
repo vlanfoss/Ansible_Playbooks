@@ -6,12 +6,12 @@
   sudo: false
 
   vars:
-    vcenter_hostname: '192.168.201.50'
-    datacenter: 'London'
-    esxi_host: '192.168.201.131'
+    vcenter_hostname: '10.9.62.70'
+    datacenter: 'Datacenter'
+    esxi_host: '10.9.65.5'
     notes: 'Created by Ansible and CloudForms'
     disk: '10' 
-    datastore: 'datastore1' 
+    datastore: 'Shared-NFS' 
     network: 'VM Network' 
     memory: '256' 
     cpucount: '1' 
