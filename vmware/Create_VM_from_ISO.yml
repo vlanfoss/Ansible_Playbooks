@@ -7,6 +7,18 @@
     disk: '80' 
 
   tasks:
+    - debug: var=vcenter_hostname
+    - debug: var=esxi_host
+    - debug: var=datacenter
+    - debug: var=iso
+    - debug: var=osid
+    - debug: var=cpucount
+    - debug: var=memory
+    - debug: var=network
+    - debug: var=datastore
+    - debug: var=disk
+    - debug: var=notes
+
     - name: Create Virtual Machines
       vsphere_guest:
         validate_certs: no
