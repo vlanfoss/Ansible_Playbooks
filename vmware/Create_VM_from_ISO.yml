@@ -8,8 +8,6 @@
 
   tasks:
     - debug: var=vcenter_hostname
-    - debug: var=dialog.vcenter_hostname
-    - debug: var=manageiq.vcenter_hostname
     - debug: var=esxi_host
     - debug: var=datacenter
     - debug: var=iso
