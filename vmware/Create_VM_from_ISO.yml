@@ -14,6 +14,7 @@
     memory: '2048' 
     cpucount: '1' 
     osid: 'rhel7_64Guest'
+    iso: 'Shared-NFS/rhel-server-7.3-x86_64-dvd.iso'
 
 
   tasks:
@@ -21,8 +22,6 @@
       vsphere_guest:
         validate_certs: no
         vcenter_hostname: "{{ vcenter_hostname }}"
-        username: administrator@vsphere.local
-        password: Redhat1!
         guest: "{{ inventory_hostname }}"
         state: powered_on
         vm_extra_config:
@@ -44,7 +43,7 @@
           scsi: paravirtual
           vm_cdrom:
             type: "iso"
-            iso_path: "Shared-NFS/rhel-server-7.3-x86_64-dvd.iso"
+            iso_path: "{{ iso }}"
         esxi:
           datacenter: "{{ datacenter }}"
           hostname: "{{ esxi_host }}"
