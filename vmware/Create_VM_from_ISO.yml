@@ -18,6 +18,16 @@
     - debug: var=datastore
     - debug: var=disk
     - debug: var=notes
+    - debug: var=manageiq.api_url
+    - debug: var=manageiq.api_token
+    - debug: var=manageiq.service
+
+
+    - name: Set the Service URL
+      set_fact:
+        svc_url: "/api/{{ manageiq.service }}"
+
+    - debug: var=svc_url        
 
     - name: Create Virtual Machines
       vsphere_guest:
@@ -48,3 +58,17 @@
         esxi:
           datacenter: "{{ datacenter }}"
           hostname: "{{ esxi_host }}"
+      register: abc
+
+    - debug: var=abc        
+
+
+
+
+    - name: Create an array of vms
+      set_fact:
+        vms: "{{ vms|default([]) + [ { 'href': svc_url, 'resource':  { 'href': item } } ] }}"
+      with_items:
+        - "{{ vm_url }}"
+
+    - debug: var=vms
