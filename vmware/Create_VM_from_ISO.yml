@@ -58,12 +58,13 @@
         esxi:
           datacenter: "{{ datacenter }}"
           hostname: "{{ esxi_host }}"
-      register: abc
+      register: new_vm
 
-    - debug: var=abc        
+    - debug: var=new_vm    
 
+    - set_fact: new_vm_uuid="{{ new_vm.json.ansible_facts.hw_product_uuid }}"
 
-
+    - debug: var=new_vm_uuid    
 
     - name: Create an array of vms
       set_fact:
