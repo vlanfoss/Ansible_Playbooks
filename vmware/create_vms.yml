@@ -6,26 +6,22 @@
   sudo: false
 
   vars:
-    vcenter_hostname: '192.168.1.26'
-    vcenter_user: 'administrator@home.net'
-    vcenter_pass: 'Smartvm!23'
-    datacenter: 'Coulsdon'
-    esxi_host: '192.168.1.21'
-    notes: 'Created by Ansible and CloudForms yay'
+    vcenter_hostname: '10.9.62.70'
+    datacenter: 'Datacenter'
+    esxi_host: '10.9.62.5'
+    notes: 'Created by Ansible and CloudForms'
     disk: '10' 
-    datastore: 'datastore1' 
+    datastore: 'Shared-NFS' 
     network: 'VM Network' 
     memory: '256' 
     cpucount: '1' 
-    osid: 'ubuntu64Guest'
+    osid: 'rhel7_64Guest'
 
   tasks:
     - name: Create Virtual Machines
       vsphere_guest:
         validate_certs: no
         vcenter_hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_user }}"
-        password: "{{ vcenter_pass }}"
         guest: "{{ inventory_hostname }}"
         state: present
         vm_extra_config:
