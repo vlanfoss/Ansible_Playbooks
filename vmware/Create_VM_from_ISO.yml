@@ -4,18 +4,7 @@
   connection: local
 
   vars:
-    vcenter_hostname: '10.9.62.70'
-    datacenter: 'Datacenter'
-    esxi_host: '10.9.62.5'
-    notes: 'Created by Ansible and CloudForms'
     disk: '80' 
-    datastore: 'Shared-NFS' 
-    network: 'VM Network' 
-    memory: '2048' 
-    cpucount: '1' 
-    osid: 'rhel7_64Guest'
-    iso: 'Shared-NFS/rhel-server-7.3-x86_64-dvd.iso'
-
 
   tasks:
     - name: Create Virtual Machines
