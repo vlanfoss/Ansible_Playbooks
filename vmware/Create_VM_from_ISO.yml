@@ -15,9 +15,9 @@
     #network: 'VM Network'
     #datastore: 'Shared-NFS'
     #notes: ''
-    #manageiq_api_url: 'https://192.168.201.132'
-    #manageiq_api_token: '64b357231c7795d06a7c066dc049fa16'
-    #manageiq_service: 'services/21000000000024'
+    #manageiq.api_url: 'https://192.168.201.132'
+    #manageiq.api_token: '64b357231c7795d06a7c066dc049fa16'
+    #manageiq.service: 'services/21000000000024'
 
 
   tasks:
@@ -32,14 +32,14 @@
     - debug: var=datastore
     - debug: var=disk
     - debug: var=notes
-    - debug: var=manageiq_api_url
-    - debug: var=manageiq_api_token
-    - debug: var=manageiq_service
+    - debug: var=manageiq.api_url
+    - debug: var=manageiq.api_token
+    - debug: var=manageiq.service
 
 
     - name: Set the Service URL
       set_fact:
-        svc_url: "/api/{{ manageiq_service }}"
+        svc_url: "/api/{{ manageiq.service }}"
 
     - debug: var=svc_url        
 
@@ -85,7 +85,7 @@
     - pause:
         minutes: 1
 
-    - set_fact: find_vm_url="{{ manageiq_api_url }}/api/vms?expand=resources&attributes=href,uid_ems&filter[]=uid_ems='{{ new_vm_uuid }}'"
+    - set_fact: find_vm_url="{{ manageiq.api_url }}/api/vms?expand=resources&attributes=href,uid_ems&filter[]=uid_ems='{{ new_vm_uuid }}'"
 
     - debug: var=find_vm_url
 
@@ -98,7 +98,7 @@
         #password: smartvm
         force_basic_auth: yes
         headers:
-           X-Auth-Token: "{{ manageiq_api_token }}"
+           X-Auth-Token: "{{ manageiq.api_token }}"
            Content-Type: "application/json"
         body_format: json
         return_content: yes
@@ -120,7 +120,7 @@
     
     - name: Register vm with the service
       uri:
-        url: "{{ manageiq_api_url }}/api/services"
+        url: "{{ manageiq.api_url }}/api/services"
         method: POST
         body_format: json
         #user: admin
@@ -130,7 +130,7 @@
           resources : "{{ vms }}"
         validate_certs: False
         headers:
-          X-Auth-Token: "{{ manageiq_api_token }}"
+          X-Auth-Token: "{{ manageiq.api_token }}"
           Content-Type: "application/json"
         status_code: 200
       register: output
