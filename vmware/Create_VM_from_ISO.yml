@@ -8,21 +8,6 @@
 
 
   tasks:
-    - debug: var=vcenter_hostname
-    - debug: var=esxi_host
-    - debug: var=datacenter
-    - debug: var=iso
-    - debug: var=osid
-    - debug: var=cpucount
-    - debug: var=memory
-    - debug: var=network
-    - debug: var=datastore
-    - debug: var=disk
-    - debug: var=notes
-    - debug: var=manageiq.api_url
-    - debug: var=manageiq.api_token
-    - debug: var=manageiq.service
-
 
     - name: Set the Service URL
       set_fact:
