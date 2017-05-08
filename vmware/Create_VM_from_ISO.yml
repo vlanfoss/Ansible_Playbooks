@@ -63,15 +63,13 @@
 
     - debug: var=new_vm    
 
-    - name: Set the VM output
-      set_fact: 
-        new_vm_uuid: "{{ new_vm.json.ansible_facts.hw_product_uuid }}"
+    - set_fact: new_vm_uuid="{{ new_vm.json.ansible_facts.hw_product_uuid }}"
 
     - debug: var=new_vm_uuid
 
-    - name: Set Find VM URL for CloudForms
-      set_fact:
-        find_vm_url: "{{ manageiq.api_url }}/api/vms?expand=resources&attributes=href,uid_ems&filter[]=uid_ems='{{ new_vm_uuid }}'"
+    - set_fact: find_vm_url="{{ manageiq.api_url }}/api/vms?expand=resources&attributes=href,uid_ems&filter[]=uid_ems='{{ new_vm_uuid }}'"
+
+    - debug: var=find_vm_url
 
     - name: Call to CloudForms to find href for EvmGroup-user
       uri:
@@ -85,10 +83,10 @@
         return_content: yes
       register: token_output
 
-    - name: Find the VM in CloudForms by UUID
-      set_fact: 
-        cf_vm_href: "{{ token_output.json.resources[0].href }}"    
+    - set_fact: cf_vm_href="{{ token_output.json.resources[0].href }}"
 
+    - debug: var=cf_vm_href
+    
     - name: Register vm with the service
       uri:
         url: "{{ manageiq.api_url }}/api/services"
