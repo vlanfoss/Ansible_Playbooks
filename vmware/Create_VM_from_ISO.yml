@@ -47,8 +47,8 @@
       vsphere_guest:
         validate_certs: no
         vcenter_hostname: "{{ vcenter_hostname }}"
-        username: 'administrator@vsphere.local'
-        password: 'Redhat1!'
+#       username: 'administrator@vsphere.local'
+#       password: 'Redhat1!'
         guest: "{{ inventory_hostname }}"
         state: powered_on
         vm_extra_config:
