@@ -4,7 +4,8 @@
   connection: local
 
   vars:
-    disk: '80' 
+    disk: '80'
+
 
   tasks:
     - debug: var=vcenter_hostname
@@ -62,14 +63,47 @@
 
     - debug: var=new_vm    
 
-    - set_fact: new_vm_uuid="{{ new_vm.json.ansible_facts.hw_product_uuid }}"
+    - name: Set the VM output
+      set_fact: 
+        new_vm_uuid: "{{ new_vm.json.ansible_facts.hw_product_uuid }}"
 
-    - debug: var=new_vm_uuid    
+    - debug: var=new_vm_uuid
 
-    - name: Create an array of vms
+    - name: Set Find VM URL for CloudForms
       set_fact:
-        vms: "{{ vms|default([]) + [ { 'href': svc_url, 'resource':  { 'href': item } } ] }}"
-      with_items:
-        - "{{ vm_url }}"
+        find_vm_url: "{{ manageiq.api_url }}/api/vms?expand=resources&attributes=href,uid_ems&filter[]=uid_ems='{{ new_vm_uuid }}'"
 
-    - debug: var=vms
+    - name: Call to CloudForms to find href for EvmGroup-user
+      uri:
+        url: "{{ find_vm_url }}"
+        method: GET
+        validate_certs: no
+        headers:
+           X-Auth-Token: "{{ manageiq.api_token }}"
+           Content-Type: "application/json"
+        body_format: json
+        return_content: yes
+      register: token_output
+
+    - name: Find the VM in CloudForms by UUID
+      set_fact: 
+        cf_vm_href: "{{ token_output.json.resources[0].href }}"    
+
+    - name: Register vm with the service
+      uri:
+        url: "{{ manageiq.api_url }}/api/services"
+        method: POST
+        body_format: json
+        body:
+          action: add_resource
+          resources : "{{ cf_vm_href }}"
+        validate_certs: False
+        headers:
+          X-Auth-Token: "{{ manageiq.api_token }}"
+          Content-Type: "application/json"
+        status_code: 200
+      register: output
+
+    - debug: var=output.json.results[0].success
+
+
