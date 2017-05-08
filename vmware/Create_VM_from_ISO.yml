@@ -5,6 +5,20 @@
 
   vars:
     disk: '80'
+    #vcenter_hostname: '10.9.62.70'
+    #esxi_host: '10.9.62.5'
+    #datacenter: 'Datacenter'
+    #iso: 'Shared-NFS/rhel-server-7.3-x86_64-dvd.iso'
+    #osid: 'rhel7_64Guest'
+    #cpucount: '1'
+    #memory: '1024'
+    #network: 'VM Network'
+    #datastore: 'Shared-NFS'
+    #notes: ''
+    #manageiq_api_url: 'https://192.168.201.132'
+    #manageiq_api_token: '64b357231c7795d06a7c066dc049fa16'
+    #manageiq_service: 'services/21000000000024'
+
 
   tasks:
     - debug: var=vcenter_hostname
@@ -18,14 +32,14 @@
     - debug: var=datastore
     - debug: var=disk
     - debug: var=notes
-    - debug: var=manageiq.api_url
-    - debug: var=manageiq.api_token
-    - debug: var=manageiq.service
+    - debug: var=manageiq_api_url
+    - debug: var=manageiq_api_token
+    - debug: var=manageiq_service
 
 
     - name: Set the Service URL
       set_fact:
-        svc_url: "/api/{{ manageiq.service }}"
+        svc_url: "/api/{{ manageiq_service }}"
 
     - debug: var=svc_url        
 
@@ -33,6 +47,8 @@
       vsphere_guest:
         validate_certs: no
         vcenter_hostname: "{{ vcenter_hostname }}"
+        username: 'administrator@vsphere.local'
+        password: 'Redhat1!'
         guest: "{{ inventory_hostname }}"
         state: powered_on
         vm_extra_config:
@@ -62,41 +78,59 @@
 
     - debug: var=new_vm    
 
-    - set_fact: new_vm_uuid="{{ new_vm.json.ansible_facts.hw_product_uuid }}"
+    - set_fact: new_vm_uuid="{{ new_vm.ansible_facts.hw_product_uuid }}"
 
     - debug: var=new_vm_uuid
 
-    - set_fact: find_vm_url="{{ manageiq.api_url }}/api/vms?expand=resources&attributes=href,uid_ems&filter[]=uid_ems='{{ new_vm_uuid }}'"
+    - pause:
+        minutes: 1
+
+    - set_fact: find_vm_url="{{ manageiq_api_url }}/api/vms?expand=resources&attributes=href,uid_ems&filter[]=uid_ems='{{ new_vm_uuid }}'"
 
     - debug: var=find_vm_url
 
-    - name: Call to CloudForms to find href for EvmGroup-user
+    - name: Call to CloudForms to find href for new_vm_uuid
       uri:
         url: "{{ find_vm_url }}"
         method: GET
         validate_certs: no
+        #user: admin
+        #password: smartvm
+        force_basic_auth: yes
         headers:
-           X-Auth-Token: "{{ manageiq.api_token }}"
+           X-Auth-Token: "{{ manageiq_api_token }}"
            Content-Type: "application/json"
         body_format: json
         return_content: yes
       register: token_output
 
+    - debug: var=token_output
+
     - set_fact: cf_vm_href="{{ token_output.json.resources[0].href }}"
 
     - debug: var=cf_vm_href
+
+    - name: Create an array of vms
+      set_fact:
+        vms: "{{ vms|default([]) + [ { 'href': svc_url, 'resource':  { 'href': item } } ] }}"
+      with_items:
+        - "{{ cf_vm_href }}"
+
+    - debug: var=vms
     
     - name: Register vm with the service
       uri:
-        url: "{{ manageiq.api_url }}/api/services"
+        url: "{{ manageiq_api_url }}/api/services"
         method: POST
         body_format: json
+        #user: admin
+        #password: smartvm
         body:
           action: add_resource
-          resources : "{{ cf_vm_href }}"
+          resources : "{{ vms }}"
         validate_certs: False
         headers:
-          X-Auth-Token: "{{ manageiq.api_token }}"
+          X-Auth-Token: "{{ manageiq_api_token }}"
           Content-Type: "application/json"
         status_code: 200
       register: output
