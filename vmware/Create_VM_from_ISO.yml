@@ -36,7 +36,6 @@
         username: 'administrator@vsphere.local'
         password: 'Redhat1!'
         guest: "{{ inventory_hostname }}"
-        folder: "AnsibleTest"
         state: present
         vm_extra_config:
           notes: "{{ notes }}"
