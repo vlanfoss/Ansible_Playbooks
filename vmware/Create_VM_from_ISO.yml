@@ -39,8 +39,6 @@
       vsphere_guest:
         validate_certs: no
         vcenter_hostname: "{{ vcenter_hostname }}"
-        username: 'administrator@vsphere.local'
-        password: 'Redhat1!'
         guest: "{{ inventory_hostname }}"
         state: present
         vm_extra_config:
@@ -117,11 +115,8 @@
         url: "{{ find_vm_url }}"
         method: GET
         validate_certs: no
-        user: admin
-        password: smartvm
-        force_basic_auth: yes
         headers:
-#           X-Auth-Token: "{{ manageiq.api_token }}"
+           X-Auth-Token: "{{ manageiq.api_token }}"
            Content-Type: "application/json"
         body_format: json
         return_content: yes
@@ -146,14 +141,12 @@
         url: "{{ manageiq.api_url }}/api/services"
         method: POST
         body_format: json
-        user: admin
-        password: smartvm
         body:
           action: add_resource
           resources : "{{ vms }}"
         validate_certs: False
         headers:
-#          X-Auth-Token: "{{ manageiq.api_token }}"
+          X-Auth-Token: "{{ manageiq.api_token }}"
           Content-Type: "application/json"
         status_code: 200
       register: output
