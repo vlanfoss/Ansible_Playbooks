@@ -32,11 +32,19 @@
         validate_certs: no
         vcenter_hostname: "{{ vcenter_hostname }}"
         guest: "{{ inventory_hostname }}"
+        power_on_after_clone: no
         from_template: yes
         template_src: "{{ template }}"
         esxi:
           datacenter: "{{ datacenter }}"
           hostname: "{{ esxi_host }}"
+
+    - name: Gather the facts for the VM
+      vsphere_guest:
+        validate_certs: no
+        vcenter_hostname: "{{ vcenter_hostname }}"
+        guest: "{{ inventory_hostname }}"
+        vmware_guest_facts: yes
       register: new_vm
 
     - debug: var=new_vm    
