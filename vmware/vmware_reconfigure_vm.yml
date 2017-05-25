@@ -5,8 +5,8 @@
     - name: RenameVM
       vsphere_guest:
         validate_certs: False      
-        vcenter_hostname: {{ vcenter_server }}
-        guest: {{ guest_name }}
+        vcenter_hostname: "{{ vcenter_server }}"
+        guest: "{{ guest_name }}"
         state: reconfigured
         vm_hardware:
             num_cpus: 1
