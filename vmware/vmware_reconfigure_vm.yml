@@ -1,8 +1,10 @@
 ---
 - hosts: all
 
+
+
   tasks:
-    - name: RenameVM
+    - name: "RenameVM {{ guest_name }} __ {{ inventory_hostname }}"
       vsphere_guest:
         validate_certs: False      
         vcenter_hostname: "{{ vcenter_server }}"
