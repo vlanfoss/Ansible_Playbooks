@@ -1,7 +1,8 @@
 ---
 - hosts: all
   gather_facts: false
-
+  remote_user: root
+  
   tasks:
     - name: Copy File
       copy: src=/etc/hostname dest=/tmp/hostname.txt
