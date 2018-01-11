@@ -41,7 +41,7 @@
         status_code: 200
       register: output
       
-     - name: Set the Other Attributes
+    - name: Set the Other Attributes
       uri:
         url: "{{ aws_url }}"
         method: POST
