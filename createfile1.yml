@@ -9,5 +9,5 @@
   tasks:    
     - name: Copy File
       copy: src=/etc/hostname dest=/tmp/hostname.txt
-    - name: Print out our var
+    - debug:
       msg: "Variable SomethingMore is .... {{ somethingmore }}"
