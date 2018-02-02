@@ -24,9 +24,9 @@
       set_fact:
         aws_url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
         
-    - name: Set the task url
-      set_fact:
-        task_url: "{{ manageiq.api_url }}/api/{{ manageiq.task_href_slug }}"
+#    - name: Set the task url
+#      set_fact:
+#        task_url: "{{ manageiq.api_url }}/api/{{ manageiq.task_href_slug }}"
 
     - name: Call to get token
       uri:
