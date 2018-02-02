@@ -91,7 +91,7 @@
     - debug: var=workspace
  
     - set_fact: 
-         root_attrs: { 'ipam_ipaddress': "{{ ipaddress }}" }
+         root_attrs: {'options': { 'ip_addr': "{{ ipaddress }}" }}
          
     - set_fact: 
          state_attrs: { 'ipam_cidr': "{{ cidr }}" }
@@ -102,7 +102,7 @@
         method: POST
         body:
           action: edit
-          resource: "{ 'objects': { 'root': {{ root_attrs }} }, 'state_vars': {{ state_attrs }}}"
+          resource: "{ 'objects': { 'miq_provision': {{ root_attrs }} }, 'state_vars': {{ state_attrs }} }"
         body_format: json
         validate_certs: False
         headers:
