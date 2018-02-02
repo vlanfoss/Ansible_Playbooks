@@ -103,7 +103,7 @@
       
     - name: Update the root object in the workspace
       uri:
-        url: "{{ manageiq.api_url }}/api/{{ miq_provision_id }}"
+        url: "{{ manageiq.api_url }}/api/request_tasks/{{ miq_provision_id }}"
         method: POST
         body:
           action: edit
