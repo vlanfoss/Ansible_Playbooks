@@ -23,6 +23,10 @@
     - name: Set the automate workspace url
       set_fact:
         aws_url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
+        
+    - name: Set the task url
+      set_fact:
+        task_url: "{{ manageiq.api_url }}/api/{{ manageiq.task_href_slug }}"
 
     - name: Call to get token
       uri:
@@ -91,18 +95,15 @@
     - debug: var=workspace
  
     - set_fact: 
-         root_attrs: {'options': { 'ip_addr': "{{ ipaddress }}" }}
-         
-    - set_fact: 
-         state_attrs: { 'ipam_cidr': "{{ cidr }}" }
+         options: { 'ip_addr': "{{ ipaddress }}" }
       
     - name: Update the root object in the workspace
       uri:
-        url: "{{ aws_url }}"
+        url: "{{ task_url }}"
         method: POST
         body:
           action: edit
-          resource: "{ 'objects': { 'miq_provision': {{ root_attrs }} }, 'state_vars': {{ state_attrs }} }"
+          resource: "{ 'options': {{ options }}}"
         body_format: json
         validate_certs: False
         headers:
