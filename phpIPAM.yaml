@@ -4,7 +4,7 @@
 - hosts: localhost
 
   vars:
-    other_attrs: { 'ipaddress': 'Fred Flintstone', 'city': 'Bedrock' }
+    root_vars: { 'ipaddress': 'Fred Flintstone', 'city': 'Bedrock' }
     cidr: "10.9.62.0/24"
     token: ""
     username: "admin"
@@ -97,7 +97,7 @@
         method: POST
         body:
           action: edit
-          resource: "{ 'objects': { 'root': {{ root_attrs }} }}"
+          resource: "{ 'objects': { 'root': {{ root_vars }} }}"
         body_format: json
         validate_certs: False
         headers:
