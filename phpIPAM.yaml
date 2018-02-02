@@ -107,4 +107,17 @@
       register: output
       
     - debug:
-        msg: "IPAM first free address is {{ output }}"
+        msg: "WORKSPACE UPDATE {{ output }}"
+        
+    - name: Fetch the Workspace
+      uri:
+        url: "{{ aws_url }}"
+        method: GET 
+        validate_certs: False
+        headers:
+          X-Auth-Token: "{{ manageiq.api_token }}"
+          Content-Type: "application/json" 
+        status_code: 200 
+      register: workspace
+
+    - debug: var=workspace
