@@ -105,3 +105,6 @@
           Content-Type: "application/json" 
         status_code: 200
       register: output
+      
+    - debug:
+        msg: "IPAM first free address is {{ output }}"
