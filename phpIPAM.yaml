@@ -94,12 +94,16 @@
 
     - debug: var=workspace
  
+    - set_fact: miq_provision_id="{{ workspace.json.input[0].objects[0].root.miq_provision_id }}"
+ 
+    - debug: var=task_url
+ 
     - set_fact: 
          options: { 'ip_addr': "{{ ipaddress }}" }
       
     - name: Update the root object in the workspace
       uri:
-        url: "{{ task_url }}"
+        url: "{{ manageiq.api_url }}/api/{{ miq_provision_id }}"
         method: POST
         body:
           action: edit
