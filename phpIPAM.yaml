@@ -91,13 +91,13 @@
 
     - debug: var=workspace
       
-    - name: Set the Other Attributes
+    - name: Set the Root Attributes
       uri:
         url: "{{ aws_url }}"
         method: POST
         body:
           action: edit
-          resource: "{ 'objects': { 'root': {{ other_attrs }} }, 'state_vars': {}}"
+          resource: "{ 'objects': { 'root': {{ root_attrs }} }}"
         body_format: json
         validate_certs: False
         headers:
