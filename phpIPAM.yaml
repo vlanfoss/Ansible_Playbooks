@@ -4,7 +4,8 @@
 - hosts: localhost
 
   vars:
-    root_vars: { 'ipaddress': 'Fred Flintstone', 'city': 'Bedrock' }
+    root_attrs: { 'name': 'Fred Flintstone', 'address': 'Bedrock' }
+    state_attrs: { 'name': 'Wilma Flintstone', 'friend': 'Betty Rubble' }
     cidr: "10.9.62.0/24"
     token: ""
     username: "admin"
@@ -91,13 +92,13 @@
 
     - debug: var=workspace
       
-    - name: Set the Root Attributes
+    - name: Update the root object in the workspace
       uri:
         url: "{{ aws_url }}"
         method: POST
         body:
           action: edit
-          resource: "{ 'objects': { 'root': {{ root_vars }} }}"
+          resource: "{ 'objects': { 'root': {{ root_attrs }} }, 'state_vars': {{ state_attrs }}}"
         body_format: json
         validate_certs: False
         headers:
