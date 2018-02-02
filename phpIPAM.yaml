@@ -91,10 +91,10 @@
     - debug: var=workspace
  
     - set_fact: 
-         root_attrs={ 'ipam_ipaddress': "{{ ipaddress }}" }
+         root_attrs: { 'ipam_ipaddress': "{{ ipaddress }}" }
          
     - set_fact: 
-         state_attrs={ 'ipam_cidr': "{{ cidr }}" }
+         state_attrs: { 'ipam_cidr': "{{ cidr }}" }
       
     - name: Update the root object in the workspace
       uri:
