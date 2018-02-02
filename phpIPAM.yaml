@@ -1,0 +1,107 @@
+# John Hardy
+# Get IP from PHPIPAM
+---
+- hosts: localhost
+
+  vars:
+    other_attrs: { 'ipaddress': 'Fred Flintstone', 'city': 'Bedrock' }
+    cidr: "10.9.62.0/24"
+    token: ""
+    username: "admin"
+    password: "password"
+    ipam_server: "10.9.61.97"
+    token_url: "http://{{ ipam_server }}/api/cfme/user/"
+#    manageiq:
+#       api_token: "85a11ac96a59f43d5fed0384fb545fa0"
+#       automate_workspace: "automate_workspaces/c854880e-42eb-45f1-848d-bf6e29690527"
+#       api_url: "https://172.16.124.132"
+#       user: "users/22000000000001"
+#       group: "groups/22000000000002"
+#       request_task: "provision_requests/22000000000029/request_tasks/22000000000029"
+#       X_MIQ_Group: "EvmGroup-super_administrator"
+
+  tasks:
+    - name: Set the automate workspace url
+      set_fact:
+        aws_url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
+
+    - name: Call to get token
+      uri:
+        url: "{{ token_url }}"
+        method: POST
+        user: "{{ username }}"
+        password: "{{ password }}"
+        force_basic_auth: yes
+        validate_certs: no
+        headers:
+           Content-Type: "application/json"
+        body_format: json
+        return_content: yes
+      register: token_output
+
+    - set_fact: token="{{ token_output.json.data.token }}"
+
+    - debug:
+        msg: "IPAM Token is {{ token }}"
+
+    - name: Call to find subnet id
+      uri:
+        url: "http://{{ ipam_server }}/api/cfme/subnets/cidr/{{ cidr }}/"
+        method: GET
+        validate_certs: no
+        headers:
+           Content-Type: "application/json"
+           token: "{{ token }}"
+        body_format: json
+        return_content: yes
+      register: token_output
+
+    - set_fact: subnet_href="{{ token_output.json.data[0].links[0].href }}"
+
+    - debug:
+        msg: "IPAM {{ cidr }} returned ID {{ subnet_href }}"
+
+    - name: Call to first IP address
+      uri:
+        url: "http://{{ ipam_server }}{{ subnet_href }}first_free/"
+        method: GET
+        validate_certs: no
+        headers:
+           Content-Type: "application/json"
+           token: "{{ token }}"
+        body_format: json
+        return_content: yes
+      register: free_ip
+
+    - set_fact: ipaddress="{{ free_ip.json.data }}"
+
+    - debug:
+        msg: "IPAM first free address is {{ ipaddress }}"
+
+    - name: Fetch the Workspace
+      uri:
+        url: "{{ aws_url }}"
+        method: GET 
+        validate_certs: False
+        headers:
+          X-Auth-Token: "{{ manageiq.api_token }}"
+          Content-Type: "application/json" 
+        status_code: 200 
+      register: workspace
+
+    - debug: var=workspace
+      
+    - name: Set the Other Attributes
+      uri:
+        url: "{{ aws_url }}"
+        method: POST
+        body:
+          action: edit
+          resource: "{ 'objects': { 'root': {{ other_attrs }} }, 'state_vars': {}}"
+        body_format: json
+        validate_certs: False
+        headers:
+          X-Auth-Token: "{{ manageiq.api_token }}"
+          Content-Type: "application/json" 
+        status_code: 200
+      register: output
