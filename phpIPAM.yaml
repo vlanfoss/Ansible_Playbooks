@@ -96,7 +96,7 @@
  
     - set_fact: miq_provision_id="{{ workspace.json.input.objects.root.miq_provision_id }}"
  
-    - debug: var=task_url
+    - debug: var=miq_provision_id
  
     - set_fact: 
          options: { 'ip_addr': "{{ ipaddress }}" }
