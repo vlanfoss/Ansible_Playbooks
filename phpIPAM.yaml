@@ -4,8 +4,6 @@
 - hosts: localhost
 
   vars:
-    root_attrs: { 'name': 'Fred Flintstone', 'address': 'Bedrock' }
-    state_attrs: { 'name': 'Wilma Flintstone', 'friend': 'Betty Rubble' }
     cidr: "10.9.62.0/24"
     token: ""
     username: "admin"
@@ -91,6 +89,12 @@
       register: workspace
 
     - debug: var=workspace
+ 
+    - set_fact: 
+         root_attrs={ 'ipam_ipaddress': "{{ ipaddress }}" }
+         
+    - set_fact: 
+         state_attrs={ 'ipam_cidr': "{{ cidr }}" }
       
     - name: Update the root object in the workspace
       uri:
