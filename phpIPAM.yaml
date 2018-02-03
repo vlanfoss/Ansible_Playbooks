@@ -10,24 +10,16 @@
     password: "password"
     ipam_server: "10.9.61.97"
     token_url: "http://{{ ipam_server }}/api/cfme/user/"
-#    manageiq:
-#       api_token: "85a11ac96a59f43d5fed0384fb545fa0"
-#       automate_workspace: "automate_workspaces/c854880e-42eb-45f1-848d-bf6e29690527"
-#       api_url: "https://172.16.124.132"
-#       user: "users/22000000000001"
-#       group: "groups/22000000000002"
-#       request_task: "provision_requests/22000000000029/request_tasks/22000000000029"
-#       X_MIQ_Group: "EvmGroup-super_administrator"
-
+    
+  roles:
+  - syncrou.manageiq-automate
+  - syncrou.manageiq-vmdb
+  
   tasks:
     - name: Set the automate workspace url
       set_fact:
         aws_url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
         
-#    - name: Set the task url
-#      set_fact:
-#        task_url: "{{ manageiq.api_url }}/api/{{ manageiq.task_href_slug }}"
-
     - name: Call to get token
       uri:
         url: "{{ token_url }}"
@@ -98,26 +90,16 @@
  
     - debug: var=miq_provision_id
  
-    - set_fact: 
-         options: { 'ip_addr': "{{ ipaddress }}" }
-      
-    - name: Update the root object in the workspace
-      uri:
-        url: "{{ manageiq.api_url }}/api/request_tasks/{{ miq_provision_id }}"
-        method: POST
-        body:
-          action: edit
-          resource: "{ 'options': {{ options }}}"
-        body_format: json
-        validate_certs: False
-        headers:
-          X-Auth-Token: "{{ manageiq.api_token }}"
-          Content-Type: "application/json" 
-        status_code: 200
-      register: output
-      
-    - debug:
-        msg: "WORKSPACE UPDATE {{ output }}"
+    - name: Update vmname in Task options
+      manageiq_vmdb:
+        href: "{{ manageiq.request_task }}"
+        action: edit
+        data: 
+          options:
+            ip_addr: "{{ ipaddress }}"
+      register:    result
+
+    - debug: msg="attribute result dictionary {{ result }}"
         
     - name: Fetch the Workspace
       uri:
