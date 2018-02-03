@@ -11,6 +11,7 @@
     ipam_server: "10.9.61.97"
     token_url: "http://{{ ipam_server }}/api/cfme/user/"
     manageiq_validate_certs: False
+    object: root
     
   roles:
   - syncrou.manageiq-automate
@@ -98,6 +99,7 @@
         data: 
           options:
             ip_addr: "{{ ipaddress }}"
+            notes: "hello world"
       register:    result
 
     - debug: msg="attribute result dictionary {{ result }}"
