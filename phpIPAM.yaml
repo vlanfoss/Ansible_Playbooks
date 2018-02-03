@@ -10,6 +10,8 @@
     password: "password"
     ipam_server: "10.9.61.97"
     token_url: "http://{{ ipam_server }}/api/cfme/user/"
+    manageiq_connection:
+        manageiq_validate_certs: false
     
   roles:
   - syncrou.manageiq-automate
