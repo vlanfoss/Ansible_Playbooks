@@ -3,9 +3,8 @@
   hosts: localhost
   connection: local
   vars:
-  object: root
-  manageiq_validate_certs: False
-  
+  - object: root
+
   gather_facts: False
   roles:
   - syncrou.manageiq-automate
