@@ -17,9 +17,9 @@
         action: edit
         data: 
           options:
-            vm_target_name: "name_from_ansible"
-            cpu_limit: 4
-            vm_memory: 4096
+            vm_target_name: "ansible01"
+            number_of_sockets: 1
+            vm_memory: 1024
       register:    result
 
     - debug: msg="attribute result dictionary {{ result }}"
