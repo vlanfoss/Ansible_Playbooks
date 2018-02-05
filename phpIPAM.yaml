@@ -98,9 +98,10 @@
         action: edit
         data: 
           options:
-            ip_addr: "{{ ipaddress }}"
-            notes: "hello world"
-      register:    result
+            vm_target_name: "ansible01"
+            number_of_sockets: 1
+            vm_memory: 1024
+        register:    result
 
     - debug: msg="attribute result dictionary {{ result }}"
         
