@@ -100,7 +100,7 @@
           options:
             vm_target_name: "ansible01"
             number_of_sockets: 1
-            vm_memory: 1024
+            ip_addr: "{{ ipaddress }}"
       register:    result
 
     - debug: msg="attribute result dictionary {{ result }}"
