@@ -81,16 +81,16 @@
         action: edit
         data: 
           options:
-            hostname: "TESTWORKED"
-            vm_target_hostname: "TESTWORKED"
-            vm_target_name: "TESTWORKED"
+        #    hostname: "TESTWORKED"
+        #    vm_target_hostname: "TESTWORKED"
+        #    vm_target_name: "TESTWORKED"
             vm_name: "TESTWORKED"
-            addr_mode: "static"
-            subnet_mask: "255.255.255.196"
-            gateway: "10.9.61.1"
-            dns_servers: "8.8.8.8"
-            dns_suffixes: ""
-            ip_addr: "{{ ipaddress }}"
+        #    addr_mode: "static"
+        #    subnet_mask: "255.255.255.196"
+        #    gateway: "10.9.61.1"
+        #    dns_servers: "8.8.8.8"
+        #    dns_suffixes: ""
+        #    ip_addr: "{{ ipaddress }}"
       register:    result
 
     - debug: msg="attribute result dictionary {{ result }}"
