@@ -75,36 +75,6 @@
     - debug:
         msg: "IPAM first free address is {{ ipaddress }}"
 
-    - name: Fetch the Workspace
-      uri:
-        url: "{{ aws_url }}"
-        method: GET 
-        validate_certs: False
-        headers:
-          X-Auth-Token: "{{ manageiq.api_token }}"
-          Content-Type: "application/json" 
-        status_code: 200 
-      register: workspace
-
-    - debug: var=workspace
- 
-    - set_fact: miq_provision_id="{{ workspace.json.input.objects.root.miq_provision_id }}"
- 
-    - debug: var=miq_provision_id
-    
-    - name: "Get miq_provision"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_attribute:
-
-          object: "miq_provision"
-          attribute: "options"
-      register:    result
-
-    - debug: msg="attribute result dictionary {{ result }}"
-    - debug: msg="attribute result value is {{ result.value }}"
-
- 
     - name: Update vmname in Task options
       manageiq_vmdb:
         href: "{{ manageiq.request_task }}"
@@ -124,15 +94,3 @@
       register:    result
 
     - debug: msg="attribute result dictionary {{ result }}"
-        
-    - name: "Get miq_provision"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_attribute:
-
-          object: "miq_provision"
-          attribute: "options"
-      register:    result
-
-    - debug: msg="attribute result dictionary {{ result }}"
-    - debug: msg="attribute result value is {{ result.value }}"
