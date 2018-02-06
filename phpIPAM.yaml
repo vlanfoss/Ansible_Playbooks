@@ -98,8 +98,15 @@
         action: edit
         data: 
           options:
-            vm_target_name: "ansible01"
-            number_of_sockets: 1
+            hostname: "TESTWORKED"
+            vm_target_hostname: "TESTWORKED"
+            vm_target_name: "TESTWORKED"
+            vm_name: "TESTWORKED"
+            addr_mode: "static"
+            subnet_mask: "255.255.255.196"
+            gateway: "10.9.61.1"
+            dns_servers: "8.8.8.8"
+            dns_suffixes: ""
             ip_addr: "{{ ipaddress }}"
       register:    result
 
