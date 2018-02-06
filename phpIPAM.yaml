@@ -98,7 +98,7 @@
         get_attribute:
 
           object: "miq_provision"
-          attribute: "addr_mode"
+          attribute: "options"
       register:    result
 
     - debug: msg="attribute result dictionary {{ result }}"
