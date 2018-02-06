@@ -91,6 +91,19 @@
     - set_fact: miq_provision_id="{{ workspace.json.input.objects.root.miq_provision_id }}"
  
     - debug: var=miq_provision_id
+    
+    - name: "Get miq_provision"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+
+          object: "miq_provision"
+          attribute: "addr_mode"
+      register:    result
+
+    - debug: msg="attribute result dictionary {{ result }}"
+    - debug: msg="attribute result value is {{ result.value }}"
+
  
     - name: Update vmname in Task options
       manageiq_vmdb:
