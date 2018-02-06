@@ -125,15 +125,14 @@
 
     - debug: msg="attribute result dictionary {{ result }}"
         
-    - name: Fetch the Workspace
-      uri:
-        url: "{{ aws_url }}"
-        method: GET 
-        validate_certs: False
-        headers:
-          X-Auth-Token: "{{ manageiq.api_token }}"
-          Content-Type: "application/json" 
-        status_code: 200 
-      register: workspace
+    - name: "Get miq_provision"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
 
-    - debug: var=workspace
+          object: "miq_provision"
+          attribute: "addr_mode"
+      register:    result
+
+    - debug: msg="attribute result dictionary {{ result }}"
+    - debug: msg="attribute result value is {{ result.value }}"
