@@ -21,9 +21,15 @@
     - debug:
         msg: "VM NAME {{ vm_name }}"
         
-    - name: Set the automate workspace url
-      set_fact:
-        aws_url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
+    - name: "Get miq_request object reference"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+          object: "root"
+          attribute: "miq_request"
+      register: miq_request
+
+    - debug: msg="miq_request is {{ miq_request.value }}"
         
     - name: Call to get token
       uri:
@@ -88,7 +94,7 @@
             vm_target_hostname: "TESTWORKED"
             vm_target_name: "TESTWORKED"
             vm_name: "TESTWORKED"
-            addr_mode: ["static","Static"]
+            addr_mode: "static"
             subnet_mask: "255.255.255.196"
             gateway: "10.9.61.1"
             dns_servers: "8.8.8.8"
