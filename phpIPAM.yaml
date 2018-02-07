@@ -21,16 +21,6 @@
     - debug:
         msg: "VM NAME {{ vm_name }}"
         
-    - name: "Get miq_request object reference"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_attribute:
-          object: "root"
-          attribute: "miq_request"
-      register: miq_request
-
-    - debug: msg="miq_request is {{ miq_request.value }}"
-        
     - name: Call to get token
       uri:
         url: "{{ token_url }}"
