@@ -18,6 +18,9 @@
   - syncrou.manageiq-vmdb
   
   tasks:
+    - debug:
+        msg: "VM NAME {{ vm_name }}"
+        
     - name: Set the automate workspace url
       set_fact:
         aws_url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
@@ -85,7 +88,7 @@
             vm_target_hostname: "TESTWORKED"
             vm_target_name: "TESTWORKED"
             vm_name: "TESTWORKED"
-            #addr_mode: "static"
+            addr_mode: ["static","Static"]
             subnet_mask: "255.255.255.196"
             gateway: "10.9.61.1"
             dns_servers: "8.8.8.8"
