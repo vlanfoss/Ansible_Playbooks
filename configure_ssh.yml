@@ -1,5 +1,5 @@
 ---
-- name: insert playbook name here
+- name: Configure SSH on Guest
   hosts: localhost
   connection: local
   vars:
