@@ -8,6 +8,13 @@
   tasks:
     - debug:
         msg: "Running PLAYBOOK SSH Configure"
+        
+    - name: Same as above but subscribe to a specific pool by ID.
+       redhat_subscription:
+         state: present
+         username: joe_user
+         password: somepass
+         pool_ids: 0123456789abcdef0123456789abcdef
 
     - debug:
         msg: "VM NAME {{ vm_name }}"
