@@ -4,3 +4,10 @@
   connection: local
   vars:
   - object: root
+  
+  tasks:
+    - debug:
+        msg: "Running PLAYBOOK SSH Configure"
+
+    - debug:
+        msg: "VM NAME {{ vm_name }}"
