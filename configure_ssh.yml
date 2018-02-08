@@ -2,10 +2,7 @@
 - hosts: localhost
 
   vars:
-    rhn_user: jhardy@redhat.com
-    rhn_password: Alexia1611
-    rhn_pool: 8a85f98260c27fc50160c32cc5fe5ceb
-
+    
   tasks:
     - debug:
         msg: "Running PLAYBOOK SSH Configure"
