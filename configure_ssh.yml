@@ -1,20 +1,19 @@
 ---
-- name: Configure SSH on Guest
-  hosts: localhost
-  connection: local
+- hosts: localhost
+
   vars:
-  - object: root
-  
+    rhn_user: jhardy@redhat.com
+    rhn_password: Alexia1611
+    rhn_pool: 8a85f98260c27fc50160c32cc5fe5ceb
+
   tasks:
     - debug:
         msg: "Running PLAYBOOK SSH Configure"
-        
-    - name: Same as above but subscribe to a specific pool by ID.
-        redhat_subscription:
-          state: present
-          username: "{{ rhn_user }}"
-          password: "{{ rhn_password }}"
-          pool_ids: "{{ rhn_pool }}"
 
-    - debug:
-        msg: "VM NAME {{ vm_name }}"
+    - name: Same as above but subscribe to a specific pool by ID.
+      redhat_subscription:
+        state: present
+        username: "{{ rhn_user }}"
+        password: "{{ rhn_password }}"
+        pool_ids: "{{ rhn_pool }}"
+
