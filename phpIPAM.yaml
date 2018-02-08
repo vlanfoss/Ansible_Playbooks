@@ -90,10 +90,10 @@
         action: edit
         data: 
           options:
-            hostname: "TESTWORKED"
-            vm_target_hostname: "TESTWORKED"
-            vm_target_name: "TESTWORKED"
-            vm_name: "TESTWORKED"
+            hostname: "{{ vm_name }}"
+            vm_target_hostname: "{{ vm_name }}"
+            vm_target_name: "{{ vm_name }}"
+            vm_name: "{{ vm_name }}"
             addr_mode: "static"
             subnet_mask: "255.255.255.196"
             gateway: "10.9.61.1"
