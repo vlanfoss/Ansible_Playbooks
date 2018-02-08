@@ -12,9 +12,9 @@
     - name: Same as above but subscribe to a specific pool by ID.
        redhat_subscription:
          state: present
-         username: joe_user
-         password: somepass
-         pool_ids: 0123456789abcdef0123456789abcdef
+         username: "{{ rhn_user }}"
+         password: "{{ rhn_password }}"
+         pool_ids: "{{ rhn_pool }}"
 
     - debug:
         msg: "VM NAME {{ vm_name }}"
