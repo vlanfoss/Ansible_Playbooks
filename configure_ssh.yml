@@ -10,11 +10,11 @@
         msg: "Running PLAYBOOK SSH Configure"
         
     - name: Same as above but subscribe to a specific pool by ID.
-       redhat_subscription:
-         state: present
-         username: "{{ rhn_user }}"
-         password: "{{ rhn_password }}"
-         pool_ids: "{{ rhn_pool }}"
+        redhat_subscription:
+          state: present
+          username: "{{ rhn_user }}"
+          password: "{{ rhn_password }}"
+          pool_ids: "{{ rhn_pool }}"
 
     - debug:
         msg: "VM NAME {{ vm_name }}"
