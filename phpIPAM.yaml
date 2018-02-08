@@ -94,7 +94,7 @@
             vm_target_hostname: "{{ vm_name }}"
             vm_target_name: "{{ vm_name }}"
             vm_name: "{{ vm_name }}"
-            addr_mode: "static"
+            #addr_mode: "static"
             subnet_mask: "255.255.255.196"
             gateway: "10.9.61.1"
             dns_servers: "8.8.8.8"
