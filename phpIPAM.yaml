@@ -4,7 +4,7 @@
 - hosts: localhost
 
   vars:
-    cidr: "10.9.62.0/24"
+    cidr: "10.9.61.0/24"
     token: ""
     username: "admin"
     password: "password"
@@ -95,7 +95,7 @@
             vm_target_name: "{{ vm_name }}"
             vm_name: "{{ vm_name }}"
             #addr_mode: "static"
-            subnet_mask: "255.255.255.196"
+            subnet_mask: "255.255.255.192"
             gateway: "10.9.61.1"
             dns_servers: "8.8.8.8"
             dns_suffixes: ""
