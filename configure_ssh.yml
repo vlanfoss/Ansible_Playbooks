@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: all
 
   vars:
     
@@ -7,7 +7,7 @@
     - debug:
         msg: "Running PLAYBOOK SSH Configure"
 
-    - name: Same as above but subscribe to a specific pool by ID.
+    - name: Subscribe to RHN
       redhat_subscription:
         state: present
         username: "{{ rhn_user }}"
