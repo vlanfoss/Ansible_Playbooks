@@ -97,7 +97,7 @@
             #addr_mode: "static"
             subnet_mask: "255.255.255.192"
             gateway: "10.9.61.65"
-            dns_servers: "8.8.8.8"
+            dns_servers: "10.9.62.86"
             dns_suffixes: ""
             ip_addr: "{{ ipaddress }}"
       register:    result
