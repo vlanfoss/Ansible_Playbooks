@@ -41,7 +41,7 @@
           datacenter: "{{ datacenter }}"
           hostname: "{{ esxi_host }}"
         vm_disk:
-          disk1:
+          disk2:
             size_gb: "{{ size }}"
             type: thin
             datastore: "{{ datastore }}"
