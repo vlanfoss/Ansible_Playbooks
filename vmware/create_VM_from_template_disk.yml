@@ -42,9 +42,9 @@
           hostname: "{{ esxi_host }}"
         vm_disk:
           disk1:
-            size_gb: {{ size }}
+            size_gb: "{{ size }}"
             type: thin
-            datastore: {{ datastore }}
+            datastore: "{{ datastore }}"
 
     - name: Gather the facts for the VM
       vsphere_guest:
