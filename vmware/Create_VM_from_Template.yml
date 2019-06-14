@@ -83,18 +83,18 @@
     - debug: var=new_vm_uuid
     #- debug: var=new_vm.ansible_facts.hw_instance_uuid
     #- set_fact: new_instance_uuid="{{ new_vm.ansible_facts.hw_instance_uuid }}"
-    - name: Add disk to VM
-      vmware_guest_disk:
-        hostname: "{{ vcenter_hostname }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-        datacenter: "{{ datacenter }}"
-        uuid: "{{ facts.ansible_facts.hw_instance_uuid }}"
-        disk:
-          - size: "{{ size }}"
-            type: thin
-            state: present
-            scsi_type: 'paravirtual'
+    #- name: Add disk to VM
+    #  vmware_guest_disk:
+    #    hostname: "{{ vcenter_hostname }}"
+    #    username: "{{ username }}"
+    #    password: "{{ password }}"
+    #    datacenter: "{{ datacenter }}"
+    #    uuid: "{{ facts.ansible_facts.hw_instance_uuid }}"
+    #    disk:
+    #      - size: "{{ size }}"
+    #        type: thin
+    #        state: present
+    #        scsi_type: 'paravirtual'
         
     - name: Refresh provider in CloudForms
       uri:
