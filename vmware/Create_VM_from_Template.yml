@@ -49,10 +49,11 @@
 
     - debug: var=new_vm    
 
-    - set_fact: new_vm_uuid="{{ new_vm.ansible_facts.hw_product_uuid }}"
+    #- set_fact: new_vm_uuid="{{ new_vm.ansible_facts.hw_product_uuid }}"
 
-    - debug: var=new_vm_uuid
-    - set_fact: new_instance_uuid="{{ new_vm.ansible_facts.hw_instance_uuid }}"
+    #- debug: var=new_vm_uuid
+    - debug: var=new_vm.ansible_facts.hw_instance_uuid
+    #- set_fact: new_instance_uuid="{{ new_vm.ansible_facts.hw_instance_uuid }}"
     - name: Add disk to VM
       vmware_guest_disk:
         hostname: "{{ vcenter_hostname }}"
