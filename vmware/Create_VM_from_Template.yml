@@ -28,39 +28,70 @@
     - debug: var=svc_url 
 
     - name: Create Virtual Machines
-      vsphere_guest:
-        validate_certs: no
-        vcenter_hostname: "{{ vcenter_hostname }}"
-        guest: "{{ inventory_hostname }}"
-        power_on_after_clone: no
-        from_template: yes
-        template_src: "{{ template }}"
-        esxi:
-          datacenter: "{{ datacenter }}"
-          hostname: "{{ esxi_host }}"
+      vmware_guest:
+        validate_certs: False
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        name: "{{ inventory_hostname }}"
+        state: poweredon
+        disk:
+            - size_gb: 10
+              type: thin
+              datastore: "{{ datastore }}"
+        nic:
+            - type: vmxnet3
+              network: VM Network
+              network_type: standard
+        
+        datacenter: "{{ datacenter }}"
+        esxi_hostname: "{{ esxi_host }}"
+        template: "{{ template }}"
+        wait_for_ip_address: yes
+      register: deploy
+      #vsphere_guest:
+      #  validate_certs: no
+      #  vcenter_hostname: "{{ vcenter_hostname }}"
+      #  guest: "{{ inventory_hostname }}"
+      #  power_on_after_clone: no
+      #  from_template: yes
+      #  template_src: "{{ template }}"
+      #  esxi:
+      #    datacenter: "{{ datacenter }}"
+      #    hostname: "{{ esxi_host }}"
 
     - name: Gather the facts for the VM
-      vsphere_guest:
-        validate_certs: no
-        vcenter_hostname: "{{ vcenter_hostname }}"
-        guest: "{{ inventory_hostname }}"
-        vmware_guest_facts: yes
-      register: new_vm
+      #vsphere_guest:
+      #  validate_certs: no
+      #  vcenter_hostname: "{{ vcenter_hostname }}"
+      #  guest: "{{ inventory_hostname }}"
+      #  vmware_guest_facts: yes
+      #register: new_vm
+      vmware_guest:
+        validate_certs: False
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        name: "{{ inventory_hostname }}"
+        esxi_hostname: "{{ esxi_host }}"
+      register: facts
 
-    - debug: var=new_vm    
+    - debug: var=facts    
 
-    #- set_fact: new_vm_uuid="{{ new_vm.ansible_facts.hw_product_uuid }}"
+    - set_fact: new_vm_uuid="{{ facts.ansible_facts.hw_product_uuid }}"
 
-    #- debug: var=new_vm_uuid
-    - debug: var=new_vm.ansible_facts.hw_instance_uuid
+    - debug: var=new_vm_uuid
+    #- debug: var=new_vm.ansible_facts.hw_instance_uuid
     #- set_fact: new_instance_uuid="{{ new_vm.ansible_facts.hw_instance_uuid }}"
     - name: Add disk to VM
       vmware_guest_disk:
         hostname: "{{ vcenter_hostname }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
         datacenter: "{{ datacenter }}"
-        uuid: "{{ new_vm.ansible_facts.hw_instance_uuid }}"
+        uuid: "{{ facts.ansible_facts.hw_instance_uuid }}"
         disk:
-          - size: 10Gb
+          - size: "{{ size }}"
             type: thin
             state: present
             scsi_type: 'paravirtual'
